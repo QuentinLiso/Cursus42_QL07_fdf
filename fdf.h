@@ -12,22 +12,28 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define STEP 10
 # define CMDS_WIDTH	400
 # define CMDS_HEIGHT WINDOW_HEIGHT
 # define CMDS_FILE "./imgs/fdf.xpm"
-//# define ESCAPE_KEY 65307
+
 # define MLX_ERROR 1
+# define PI 3.141592654
 
 # define PURPLE 0xE1D8ED
 # define WHITE 0xFBFAFC
-# define BLACK 0x000000
+# define BLACK 0x141a2b
 
-typedef struct s_scene		t_scene;
+# define X_AXIS 1
+# define Y_AXIS 2
+# define Z_AXIS 3
+
 typedef struct s_vector2	t_vector2;
 typedef struct s_vector3	t_vector3;
 typedef struct s_rect		t_rect;
 typedef struct s_img		t_img;
+typedef struct s_map		t_map;
+typedef struct s_boundaries	t_boundaries;
+typedef struct s_scene		t_scene;
 
 struct s_vector2
 {
@@ -63,13 +69,8 @@ struct s_img
 	char	*img_file;
 };
 
-struct s_scene
+struct s_map
 {
-	void				*mlx_disp;
-	void 				*mlx_win;
-	t_img				img;
-	t_img				cmds_img;
-
 	char				*sourcefile;
 	unsigned int		w_index;
 	unsigned int		h_index;
@@ -77,12 +78,63 @@ struct s_scene
 	unsigned int		height;
 	int					**sizes;
 	unsigned int		step;
+	unsigned int		zoom_coeff;
+	unsigned int		vertices;
+	int					translation;
 	t_vector2			*iso_mesh;
 	t_vector3			*raw_mesh;
+	t_vector2			center;
 };
 
+struct s_scene
+{
+	void				*mlx_disp;
+	void 				*mlx_win;
+	t_img				img;
+	t_img				cmds_img;
+	t_map				*map;
+	t_vector2			center;
+};
+
+void	set_map_sizes(t_scene *scene, char *sourcefile);
+void	trim_map_line(char **line, char c);
+void	validate_map_sizes(t_scene *scene, char *sourcefile);
+void	parse_map_values(t_scene *scene, char *sourcefile);
+
+
 void	log_err(char *log_msg);
+double	cos_deg(double degree);
+double	sin_deg(double degree);
+void	print_map_values(t_scene *scene);
+void	print_3d_raw_mesh(t_scene *scene);
+void	print_2d_iso_mesh(t_scene *scene);
 
 
+void	put_line_to_img(t_img *img, t_vector2 a, t_vector2 b, int color);
+void	put_pix_to_img(t_img *img, int x, int y, int color);
+int		render_background(t_img *img, int color);
+int		render_rect(t_img *img, t_rect rect);
+void	render_instructions(t_scene *scene);
+
+
+void	set_3d_raw_mesh(t_scene *scene, int step);
+void	set_vertices(t_scene *scene);
+void	set_2d_iso_mesh(t_scene *scene);
+void	set_barycenter_mesh(t_scene *scene);
+void	centering_mesh(t_scene *scene);
+
+int		set_display_elems(t_scene *scene);
+int		update_render(t_scene *scene);
+int		render_2d_vertices(t_scene *scene, int color);
+int		closing_window(t_scene *scene);
+
+int	handle_keypress_input(int keysym, t_scene *scene);
+
+
+void	translate_iso_mesh(t_scene *scene, t_vector2 translation);
+void	rotate_iso_mesh(t_scene *scene, int angle);
+void	zoom_in(t_scene *scene);
+void	zoom_out(t_scene *scene);
 
 #endif
+
