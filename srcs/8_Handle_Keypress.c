@@ -22,7 +22,6 @@ int	handle_keypress_input(int keysym, t_scene *scene)
 		zoom_out(scene->map);
 	else if (keysym == XK_v)
 		scene->map->iso = !scene->map->iso;
-	//mlx_clear_window(scene->mlx_disp, scene->mlx_win);
 	return (1);
 }
 
