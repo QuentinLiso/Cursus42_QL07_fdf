@@ -2,8 +2,8 @@
 
 void	put_line_to_img(t_img *img, t_vector2 a, t_vector2 b, int color)
 {
-	double 	dx;
-	double 	dy;
+	double	dx;
+	double	dy;
 	int		pixels;
 
 	dx = b.x - a.x;
@@ -35,11 +35,11 @@ void	put_pix_to_img(t_img *img, int x, int y, int color)
 			*pixel++ = (color >> i) & 0xFF;
 		else
 			*pixel++ = (color >> (img->bpp - 8 - i) & 0xFF);
-		i-=8;
+		i -= 8;
 	}
 }
 
-int		render_background(t_img *img, int color)
+int	render_background(t_img *img, int color)
 {
 	int	w;
 	int	h;
@@ -58,7 +58,7 @@ int		render_background(t_img *img, int color)
 	return (0);
 }
 
-int		render_rect(t_img *img, t_rect rect)
+int	render_rect(t_img *img, t_rect rect)
 {
 	int	w;
 	int	h;
@@ -77,7 +77,7 @@ int		render_rect(t_img *img, t_rect rect)
 	return (0);
 }
 
-void		render_instructions(t_scene *scene)
+void	render_instructions(t_scene *scene)
 {
 	int		*w;
 	int		*h;
@@ -89,5 +89,6 @@ void		render_instructions(t_scene *scene)
 	w = &(scene->cmds_img.width);
 	h = &(scene->cmds_img.height);
 	img_file = scene->cmds_img.img_file;
-	scene->cmds_img.mlx_img = mlx_xpm_file_to_image(scene->mlx_disp, img_file, h, w);
+	scene->cmds_img.mlx_img = mlx_xpm_file_to_image(
+			scene->mlx_disp, img_file, h, w);
 }

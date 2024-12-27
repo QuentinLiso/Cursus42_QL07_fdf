@@ -8,7 +8,7 @@ void	log_err(char *log_msg)
 
 double	cos_deg(double degree)
 {
-	double rad;
+	double	rad;
 
 	rad = degree * PI / 180;
 	return (cos(rad));
@@ -16,12 +16,13 @@ double	cos_deg(double degree)
 
 double	sin_deg(double degree)
 {
-	double rad;
+	double	rad;
 
 	rad = degree * PI / 180;
 	return (sin(rad));
 }
 
+/*
 void	print_map_values(t_scene *scene)
 {
 	unsigned int h;
@@ -68,4 +69,4 @@ void	print_2d_iso_mesh(t_scene *scene)
 		i++;
 	}
 }
-
+*/
