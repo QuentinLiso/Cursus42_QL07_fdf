@@ -14,14 +14,18 @@ CCFLAGS=-Wall -Werror -Wextra
 IFLAGS=-I./minilibx-linux -I./libft/includes
 LFLAGS=-L./minilibx-linux -L./libft -lmlx -lXext -lX11 -lft -lm
 
+.PHONY: all clean fclean re
+
 #-------------------------------------------
 
 all 	: $(LIB) $(NAME)
 
-$(LIB)	:
+$(LIB)	: $(LIB_FOLD)/$(LIB)
+
+$(LIB_FOLD)/$(LIB)	:
 		make -C $(LIB_FOLD) all
 
-$(NAME)	: $(LIB) $(OBJ)
+$(NAME)	: $(OBJ)
 		$(CC) $(CCFLAGS) $(IFLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
 
 %.o		: %.c $(HEADER)
