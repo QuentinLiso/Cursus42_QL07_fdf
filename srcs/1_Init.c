@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   1_Init.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qzoli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/29 04:07:22 by qzoli             #+#    #+#             */
+/*   Updated: 2024/12/29 04:07:23 by qzoli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	init_scene(t_scene *scene, t_map *map, char *av)
@@ -12,6 +24,11 @@ void	init_scene(t_scene *scene, t_map *map, char *av)
 	scene->map->zoom = 35;
 	scene->map->zoom_coeff = 1.25f;
 	scene->map->color = WHITE;
+	scene->to_update = TRUE;
+	scene->win_w = WINDOW_WIDTH;
+	scene->win_h = WINDOW_HEIGHT;
+	scene->cmds_w = CMDS_WIDTH;
+	scene->cmds_h = CMDS_HEIGHT;
 }
 
 void	set_map_sizes(t_scene *scene, char *sourcefile)

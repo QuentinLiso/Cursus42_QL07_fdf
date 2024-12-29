@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   8_Handle_Keypress.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qzoli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/29 04:08:44 by qzoli             #+#    #+#             */
+/*   Updated: 2024/12/29 04:08:49 by qzoli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	handle_keypress_input(int keysym, t_scene *scene)
 {
+	scene->to_update = TRUE;
 	handle_color_input(keysym, scene->map);
 	handle_rotation_input(keysym, scene->map);
 	if (keysym == XK_Escape)
@@ -49,4 +62,15 @@ int	handle_color_input(int keysym, t_map *map)
 	else if (keysym == XK_w)
 		map->color = WHITE;
 	return (1);
+}
+
+int	closing_window(t_scene *scene)
+{
+	free(scene->map->iso_mesh);
+	free(scene->map->raw_mesh);
+	mlx_destroy_image(scene->mlx_disp, (&scene->img)->mlx_img);
+	mlx_destroy_window(scene->mlx_disp, scene->mlx_win);
+	mlx_destroy_display(scene->mlx_disp);
+	free(scene->mlx_disp);
+	exit (0);
 }

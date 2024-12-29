@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   3_Set_meshes.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qzoli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/29 04:07:38 by qzoli             #+#    #+#             */
+/*   Updated: 2024/12/29 04:07:40 by qzoli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	set_vertices(t_map *map)
@@ -18,7 +30,6 @@ void	set_3d_raw_mesh(t_map *map, int zoom)
 {
 	unsigned int		i;
 
-	set_vertices(map);
 	i = 0;
 	map->h_index = 0;
 	while (map->h_index < map->height)

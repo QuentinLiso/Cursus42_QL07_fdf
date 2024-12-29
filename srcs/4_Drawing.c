@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   4_Drawing.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: qzoli <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/29 04:07:46 by qzoli             #+#    #+#             */
+/*   Updated: 2024/12/29 04:07:47 by qzoli            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	put_line_to_img(t_img *img, t_vector2 a, t_vector2 b, int color)
@@ -39,16 +51,16 @@ void	put_pix_to_img(t_img *img, int x, int y, int color)
 	}
 }
 
-int	render_background(t_img *img, int color)
+int	draw_background(t_scene *scene, t_img *img, int color)
 {
 	int	w;
 	int	h;
 
 	h = 0;
-	while (h < WINDOW_HEIGHT)
+	while (h < scene->win_h)
 	{
-		w = 0;
-		while (w < WINDOW_WIDTH)
+		w = scene->cmds_w;
+		while (w < scene->win_w)
 		{
 			put_pix_to_img(img, w, h, color);
 			w++;
@@ -58,16 +70,16 @@ int	render_background(t_img *img, int color)
 	return (0);
 }
 
-int	render_rect(t_img *img, t_rect rect)
+int	draw_rect(t_img *img, t_rect rect)
 {
 	int	w;
 	int	h;
 
 	h = rect.y;
-	while (h < rect.y + rect.width)
+	while (h < rect.y + rect.height)
 	{
 		w = rect.x;
-		while (w < rect.x + rect.height)
+		while (w < rect.x + rect.width)
 		{
 			put_pix_to_img(img, w, h, rect.color);
 			w++;
@@ -77,18 +89,22 @@ int	render_rect(t_img *img, t_rect rect)
 	return (0);
 }
 
-void	render_instructions(t_scene *scene)
+void	draw_instructions(t_scene *scene, int color)
 {
-	int		*w;
-	int		*h;
-	char	*img_file;
-
-	scene->cmds_img.width = CMDS_WIDTH;
-	scene->cmds_img.height = CMDS_HEIGHT;
-	scene->cmds_img.img_file = CMDS_FILE;
-	w = &(scene->cmds_img.width);
-	h = &(scene->cmds_img.height);
-	img_file = scene->cmds_img.img_file;
-	scene->cmds_img.mlx_img = mlx_xpm_file_to_image(
-			scene->mlx_disp, img_file, h, w);
+	draw_rect(&scene->img, (t_rect){0.0f, 0.0f, scene->cmds_w,
+		scene->cmds_h, color});
+	mlx_string_put(scene->mlx_disp, scene->mlx_win, 20, 30, WHITE,
+		"#############  COMMANDS  #############");
+	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 50, WHITE,
+		"View iso/front : v");
+	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 70, WHITE,
+		"Translate : arrows");
+	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 90, WHITE,
+		"Rotate : x / y / z");
+	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 110, WHITE,
+		"Zoom in/out : i / o");
+	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 130, WHITE,
+		"Center : f");
+	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 150, WHITE,
+		"Switch colors : rgjpw");
 }
