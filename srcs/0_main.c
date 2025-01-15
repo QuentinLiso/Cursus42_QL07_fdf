@@ -26,7 +26,7 @@ int	main(int ac, char **av)
 		parse_map_values(scene.map, scene.map->sourcefile);
 		set_vertices(scene.map);
 		set_3d_raw_mesh(scene.map, scene.map->zoom);
-		set_2d_iso_mesh(scene.map);
+		set_3d_iso_mesh(scene.map);
 		set_display_elems(&scene);
 		set_loops(&scene);
 	}

@@ -1,6 +1,7 @@
 SRCS=$(addprefix ./srcs/, \
 		$(addsuffix .c, \
-			0_main 1_Init 2_Utils 3_Set_meshes 4_Drawing 5_Rendering 6_Rotation 7_Zoom 8_Handle_Keypress\
+			0_main 1_Init 2_Utils 3_Set_meshes 4_Drawing_mesh \
+			5_Drawing_instructions 6_Rendering 7_Rotation 8_Zoom 9_Handle_Keypress\
 		)\
 	)
 OBJ=$(SRCS:%.c=%.o)

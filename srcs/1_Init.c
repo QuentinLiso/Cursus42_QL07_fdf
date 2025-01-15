@@ -23,7 +23,8 @@ void	init_scene(t_scene *scene, t_map *map, char *av)
 	scene->map->translation = (t_vector2){0.0f, 0.0f};
 	scene->map->zoom = 35;
 	scene->map->zoom_coeff = 1.25f;
-	scene->map->color = WHITE;
+	scene->map->color_1 = GREEN;
+	scene->map->color_2 = BLUE;
 	scene->to_update = TRUE;
 	scene->win_w = WINDOW_WIDTH;
 	scene->win_h = WINDOW_HEIGHT;

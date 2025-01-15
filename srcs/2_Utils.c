@@ -68,17 +68,4 @@ void	print_3d_raw_mesh(t_scene *scene)
 		i++;
 	}
 }
-
-void	print_2d_iso_mesh(t_scene *scene)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < scene->map->width * scene->map->height)
-	{
-		printf("(%f, ", scene->map->iso_mesh[i].x);
-		printf("%f)\n", scene->map->iso_mesh[i].y);
-		i++;
-	}
-}
 */

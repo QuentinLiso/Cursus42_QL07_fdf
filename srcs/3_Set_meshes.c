@@ -18,7 +18,7 @@ void	set_vertices(t_map *map)
 	map->raw_mesh = ft_calloc(map->vertices, sizeof(t_vector3));
 	if (!map->raw_mesh)
 		log_err("Set 3D mesh Malloc failed!");
-	map->iso_mesh = ft_calloc(map->vertices, sizeof(t_vector2));
+	map->iso_mesh = ft_calloc(map->vertices, sizeof(t_vector3));
 	if (!map->iso_mesh)
 	{
 		free(map->raw_mesh);
@@ -40,6 +40,10 @@ void	set_3d_raw_mesh(t_map *map, int zoom)
 			map->raw_mesh[i].x = map->w_index * zoom;
 			map->raw_mesh[i].y = map->h_index * zoom;
 			map->raw_mesh[i].z = map->sizes[map->h_index][map->w_index];
+			if (map->raw_mesh[i].z)
+				map->raw_mesh[i].color = map->color_2;
+			else
+				map->raw_mesh[i].color = map->color_1;
 			i++;
 			map->w_index++;
 		}
@@ -49,24 +53,7 @@ void	set_3d_raw_mesh(t_map *map, int zoom)
 	free(map->sizes);
 }
 
-void	set_2d_iso_mesh(t_map *map)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < map->vertices)
-	{
-		map->iso_mesh[i].x = cos_deg(30.0f) * map->raw_mesh[i].x
-			- cos_deg(30.0f) * map->raw_mesh[i].y;
-		map->iso_mesh[i].y = sin_deg(30.0f) * map->raw_mesh[i].x
-			+ sin_deg(30.0f) * map->raw_mesh[i].y - map->raw_mesh[i].z;
-		map->iso_mesh[i].x += map->translation.x + WINDOW_WIDTH / 2;
-		map->iso_mesh[i].y += map->translation.y + WINDOW_HEIGHT / 2;
-		i++;
-	}
-}
-
-void	set_2d_front_mesh(t_map *map)
+void	set_3d_iso_mesh(t_map *map)
 {
 	unsigned int	i;
 
@@ -74,15 +61,16 @@ void	set_2d_front_mesh(t_map *map)
 	while (i < map->vertices)
 	{
 		map->iso_mesh[i].x = map->raw_mesh[i].x;
-		map->iso_mesh[i].y = -map->raw_mesh[i].z;
-		map->iso_mesh[i].x += map->translation.x + WINDOW_WIDTH / 2;
-		map->iso_mesh[i].y += map->translation.y + WINDOW_HEIGHT / 2;
+		map->iso_mesh[i].y = map->raw_mesh[i].y;
+		map->iso_mesh[i].z = map->raw_mesh[i].z;
+		map->iso_mesh[i].color = map->raw_mesh[i].color;
 		i++;
 	}
 }
 
 void	centering_mesh(t_map *map)
 {
-	map->translation.x = 0.0f;
-	map->translation.y = 0.0f;
+	set_3d_iso_mesh(map);
+	map->translation.x = 0;
+	map->translation.y = 0;
 }
