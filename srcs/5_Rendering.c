@@ -60,7 +60,7 @@ int	update_render(t_scene *scene)
 	else
 		set_2d_front_mesh(scene->map);
 	draw_background(scene, &scene->img, DARK);
-	render_2d_vertices(scene, WHITE);
+	new_render_2d(scene);
 	mlx_put_image_to_window(scene->mlx_disp, scene->mlx_win,
 		scene->img.mlx_img, 0, 0);
 	draw_instructions(scene, DARK_BLUE);
@@ -68,31 +68,50 @@ int	update_render(t_scene *scene)
 	return (0);
 }
 
-int	render_2d_vertices(t_scene *scene, int color)
-{
-	unsigned int	i;
-	t_vector2		cur;
-	t_vector2		next;
+// int	render_2d_vertices(t_scene *scene)
+// {
+// 	unsigned int	i;
+// 	t_vector2		cur;
+// 	t_vector2		next;
 
+// 	i = 0;
+// 	while (i < scene->map->vertices)
+// 	{
+// 		cur.x = scene->map->iso_mesh[i].x;
+// 		cur.y = scene->map->iso_mesh[i].y;
+// 		//put_pix_to_img(&scene->img, cur.x, cur.y, scene->map->color);
+// 		if (i % scene->map->width != scene->map->width - 1)
+// 		{
+// 			next.x = scene->map->iso_mesh[i + 1].x;
+// 			next.y = scene->map->iso_mesh[i + 1].y;
+// 			put_line_to_img(&scene->img, cur, next, scene->map->color);
+// 		}
+// 		if (i < scene->map->vertices - scene->map->width)
+// 		{
+// 			next.x = scene->map->iso_mesh[i + scene->map->width].x;
+// 			next.y = scene->map->iso_mesh[i + scene->map->width].y;
+// 			put_line_to_img(&scene->img, cur, next, scene->map->color);
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+int	new_render_2d(t_scene *scene)
+{
+	t_vector3		*v;
+	unsigned int	i;
+
+	v = scene->map->raw_mesh;
 	i = 0;
 	while (i < scene->map->vertices)
 	{
-		cur.x = scene->map->iso_mesh[i].x;
-		cur.y = scene->map->iso_mesh[i].y;
-		put_pix_to_img(&scene->img, cur.x, cur.y, color);
 		if (i % scene->map->width != scene->map->width - 1)
-		{
-			next.x = scene->map->iso_mesh[i + 1].x;
-			next.y = scene->map->iso_mesh[i + 1].y;
-			put_line_to_img(&scene->img, cur, next, scene->map->color);
-		}
+			put_line_to_img(&scene->img, v[i], v[i + 1], scene->map->color);
 		if (i < scene->map->vertices - scene->map->width)
-		{
-			next.x = scene->map->iso_mesh[i + scene->map->width].x;
-			next.y = scene->map->iso_mesh[i + scene->map->width].y;
-			put_line_to_img(&scene->img, cur, next, scene->map->color);
-		}
+			put_line_to_img(&scene->img, v[i], v[i + scene->map->width], scene->map->color);
 		i++;
 	}
 	return (0);
 }
+

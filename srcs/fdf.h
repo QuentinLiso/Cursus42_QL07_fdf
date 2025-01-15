@@ -116,6 +116,12 @@ typedef struct s_scene
 	int					cmds_h;
 }	t_scene;
 
+// NEW
+t_vector2	iso_vect(t_vector3 u, t_map *map);
+void	new_draw_line(t_img *img, t_vector3 a, t_vector3 b, t_map *map);
+int	new_render_2d(t_scene *scene);
+
+
 void	init_scene(t_scene *scene, t_map *map, char *av);
 void	set_map_sizes(t_scene *scene, char *sourcefile);
 void	trim_map_line(char **line, char c);
@@ -135,7 +141,7 @@ void	set_2d_iso_mesh(t_map *map);
 void	set_2d_front_mesh(t_map *map);
 void	centering_mesh(t_map *map);
 
-void	put_line_to_img(t_img *img, t_vector2 a, t_vector2 b, int color);
+void	put_line_to_img(t_img *img, t_vector3 a, t_vector3 b, int color);
 void	put_pix_to_img(t_img *img, int x, int y, int color);
 int		draw_background(t_scene *scene, t_img *img, int color);
 int		draw_rect(t_img *img, t_rect rect);
@@ -144,7 +150,7 @@ void	draw_instructions(t_scene *scene, int color);
 int		set_display_elems(t_scene *scene);
 int		set_loops(t_scene *scene);
 int		update_render(t_scene *scene);
-int		render_2d_vertices(t_scene *scene, int color);
+int		render_2d_vertices(t_scene *scene);
 
 void	rotate_3d_point_x(t_vector3 *point, int angle);
 void	rotate_3d_point_y(t_vector3 *point, int angle);

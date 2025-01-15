@@ -12,25 +12,82 @@
 
 #include "fdf.h"
 
-void	put_line_to_img(t_img *img, t_vector2 a, t_vector2 b, int color)
+void	put_line_to_img(t_img *img, t_vector3 u, t_vector3 v, int color)
 {
-	double	dx;
-	double	dy;
+	t_vector2	d;
 	int		pixels;
+	t_vector2	a;
+	t_vector2	b;
 
-	dx = b.x - a.x;
-	dy = b.y - a.y;
-	pixels = sqrt(dx * dx + dy * dy);
-	dx /= pixels;
-	dy /= pixels;
+	if (u.z != 0 || v.z != 0)
+		color = RED;
+	else
+		color = WHITE;
+
+	a.x = cos_deg(30.0f) * u.x - cos_deg(30.0f) * u.y;
+	a.y = sin_deg(30.0f) * u.x + sin_deg(30.0f) * u.y - u.z;
+	a.x += /*map->translation.x +*/ WINDOW_WIDTH / 2;
+	a.y += /*map->translation.y +*/ WINDOW_HEIGHT / 2;
+	b.x = cos_deg(30.0f) * v.x - cos_deg(30.0f) * v.y;
+	b.y = sin_deg(30.0f) * v.x + sin_deg(30.0f) * v.y - v.z;
+	b.x += /*map->translation.x +*/ WINDOW_WIDTH / 2;
+	b.y += /*map->translation.y +*/ WINDOW_HEIGHT / 2;
+
+	d.x = b.x - a.x;
+	d.y = b.y - a.y;
+	pixels = sqrt(d.x * d.x + d.y * d.y);
+	d.x /= pixels;
+	d.y /= pixels;
 	while (pixels)
 	{
 		put_pix_to_img(img, a.x, a.y, color);
-		a.x += dx;
-		a.y += dy;
+		a.x += d.x;
+		a.y += d.y;
 		--pixels;
 	}
 }
+
+
+t_vector2	iso_vect(t_vector3 u, t_map *map)
+{
+	t_vector2	iso_u;
+
+	iso_u.x = cos_deg(30.0f) * u.x - cos_deg(30.0f) * u.y;
+	iso_u.y = sin_deg(30.0f) * u.x + sin_deg(30.0f) * u.y - u.z;
+	iso_u.x += map->translation.x + WINDOW_WIDTH / 2;
+	iso_u.y += map->translation.y + WINDOW_HEIGHT / 2;
+	return (iso_u);
+}
+
+void	new_draw_line(t_img *img, t_vector3 a, t_vector3 b, t_map *map)
+{
+	t_vector2	d;
+	double		pixels;
+	t_vector2	iso[2];
+
+	if (a.z || b.z)
+		map->color = RED;
+	else
+		map->color = WHITE;
+	iso[0] = iso_vect(a, map);
+	iso[1] = iso_vect(b, map);
+	d.x = iso[1].x - iso[0].x;
+	d.y = iso[1].y - iso[0].y;
+	pixels = sqrt(d.x * d.x + d.y * d.y);
+	d.x /= pixels;
+	d.y /= pixels;
+	while (pixels)
+	{
+		put_pix_to_img(img, iso[0].x, iso[0].y, map->color);
+		iso[0].x += d.x;
+		iso[0].y += d.y;
+		--pixels;
+	}
+}
+
+
+
+
 
 void	put_pix_to_img(t_img *img, int x, int y, int color)
 {
