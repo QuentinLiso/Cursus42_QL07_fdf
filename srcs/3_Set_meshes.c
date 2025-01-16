@@ -40,10 +40,7 @@ void	set_3d_raw_mesh(t_map *map, int zoom)
 			map->raw_mesh[i].x = map->w_index * zoom;
 			map->raw_mesh[i].y = map->h_index * zoom;
 			map->raw_mesh[i].z = map->sizes[map->h_index][map->w_index];
-			if (map->raw_mesh[i].z)
-				map->raw_mesh[i].color = map->color_2;
-			else
-				map->raw_mesh[i].color = map->color_1;
+			set_vertex_color(&map->raw_mesh[i]);
 			i++;
 			map->w_index++;
 		}
@@ -51,6 +48,35 @@ void	set_3d_raw_mesh(t_map *map, int zoom)
 		map->h_index++;
 	}
 	free(map->sizes);
+}
+
+void	set_vertex_color(t_vector3 *vertex)
+{
+	if (vertex->z < SEA_LEVEL)
+	{
+		vertex->color = GRAY_COLOR;
+		vertex->level = GRAY;
+	}
+	else if (vertex->z == SEA_LEVEL)
+	{
+		vertex->color = SEA_COLOR;
+		vertex->level = SEA;
+	}
+	else if (vertex->z <= GROUND_LEVEL)
+	{
+		vertex->color = GROUND_COLOR;
+		vertex->level = GROUND;
+	}
+	else if (vertex->z <= MOUNTAIN_LEVEL)
+	{
+		vertex->color = MOUNTAIN_COLOR;
+		vertex->level = MOUNTAIN;
+	}
+	else
+	{
+		vertex->color = SNOW_COLOR;
+		vertex->level = SNOW;
+	}
 }
 
 void	set_3d_iso_mesh(t_map *map)
@@ -64,6 +90,7 @@ void	set_3d_iso_mesh(t_map *map)
 		map->iso_mesh[i].y = map->raw_mesh[i].y;
 		map->iso_mesh[i].z = map->raw_mesh[i].z;
 		map->iso_mesh[i].color = map->raw_mesh[i].color;
+		map->iso_mesh[i].level = map->raw_mesh[i].level;
 		i++;
 	}
 }

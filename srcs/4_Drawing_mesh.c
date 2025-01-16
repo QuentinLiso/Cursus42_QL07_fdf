@@ -15,14 +15,14 @@
 void	put_line_to_img(t_img *img, t_vector3 u, t_vector3 v, t_map *map)
 {
 	t_vector2	d;
-	int		pixels;
+	int			pixels;
 	t_vector2	iso[2];
 	int			color;
 
-	if (u.color != map->color_1 || v.color != map->color_1)
-		color = map->color_2;
+	if (u.level > v.level)
+		color = u.color;
 	else
-		color = map->color_1;
+		color = v.color;
 	iso_vect(&iso, u, v, map);
 	d.x = iso[1].x - iso[0].x;
 	d.y = iso[1].y - iso[0].y;
@@ -59,7 +59,6 @@ void	iso_vect(t_vector2 (*iso)[2], t_vector3 u, t_vector3 v, t_map *map)
 	(*iso)[1].x += map->translation.x + WINDOW_WIDTH / 2;
 	(*iso)[1].y += map->translation.y + WINDOW_HEIGHT / 2;
 }
-
 
 void	put_pix_to_img(t_img *img, int x, int y, int color)
 {

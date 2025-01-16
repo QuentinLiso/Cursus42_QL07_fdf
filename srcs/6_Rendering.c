@@ -76,9 +76,9 @@ int	render_2d(t_scene *scene)
 		if (i % scene->map->width != scene->map->width - 1)
 			put_line_to_img(&scene->img, v[i], v[i + 1], scene->map);
 		if (i < scene->map->vertices - scene->map->width)
-			put_line_to_img(&scene->img, v[i], v[i + scene->map->width], scene->map);
+			put_line_to_img(&scene->img, v[i], v[i + scene->map->width],
+				scene->map);
 		i++;
 	}
 	return (0);
 }
-

@@ -42,6 +42,16 @@
 # define PINK 0xFDADC7
 # define WHITE 0xFBFAFC
 
+// GEOGRAPHY
+# define GRAY_COLOR 0x4C585B
+# define SEA_LEVEL 0
+# define SEA_COLOR 0x4379F2
+# define GROUND_LEVEL 50
+# define GROUND_COLOR 0x399918 
+# define MOUNTAIN_LEVEL 130
+# define MOUNTAIN_COLOR 0x914F1E
+# define SNOW_COLOR 0xFFFFFF
+
 # define X_AXIS 1
 # define Y_AXIS 2
 # define Z_AXIS 3
@@ -50,6 +60,15 @@
 # define TRUE 1
 
 typedef unsigned char	t_bool;
+
+typedef enum e_level
+{
+	GRAY = 0,
+	SEA = 1,
+	GROUND = 2,
+	MOUNTAIN = 3,
+	SNOW = 4
+}	t_level;
 
 typedef struct s_vector2
 {
@@ -63,6 +82,7 @@ typedef struct s_vector3
 	double	y;
 	double	z;
 	int		color;
+	t_level	level;
 }	t_vector3;
 
 typedef struct s_rect
@@ -120,10 +140,6 @@ typedef struct s_scene
 	int					cmds_h;
 }	t_scene;
 
-// NEW
-int	new_render_2d(t_scene *scene);
-
-
 void	init_scene(t_scene *scene, t_map *map, char *av);
 void	set_map_sizes(t_scene *scene, char *sourcefile);
 void	trim_map_line(char **line, char c);
@@ -140,12 +156,12 @@ double	sin_deg(double degree);
 void	set_vertices(t_map *map);
 void	set_3d_raw_mesh(t_map *map, int step);
 void	set_3d_iso_mesh(t_map *map);
+void	set_vertex_color(t_vector3 *vertex);
 void	centering_mesh(t_map *map);
 
 void	put_line_to_img(t_img *img, t_vector3 a, t_vector3 b, t_map *map);
 void	iso_vect(t_vector2 (*iso)[2], t_vector3 u, t_vector3 v, t_map *map);
 void	put_pix_to_img(t_img *img, int x, int y, int color);
-
 
 int		draw_background(t_scene *scene, t_img *img, int color);
 int		draw_rect(t_img *img, t_rect rect);
