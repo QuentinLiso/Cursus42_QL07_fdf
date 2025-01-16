@@ -10,6 +10,8 @@ NAME=fdf
 
 LIB=libft.a
 LIB_FOLD=./libft/
+MLX=libmlx.a
+MLX_FOLD=./minilibx-linux/
 
 CCFLAGS=-Wall -Werror -Wextra
 IFLAGS=-I./minilibx-linux -I./libft/includes
@@ -19,12 +21,20 @@ LFLAGS=-L./minilibx-linux -L./libft -lmlx -lXext -lX11 -lft -lm
 
 #-------------------------------------------
 
-all 	: $(LIB) $(NAME)
+all 	: $(LIB) $(MLX) $(NAME) 
 
-$(LIB)	: $(LIB_FOLD)/$(LIB)
 
-$(LIB_FOLD)/$(LIB)	:
+$(LIB)	: $(LIB_FOLD)$(LIB)
+
+$(LIB_FOLD)$(LIB)	:
 		make -C $(LIB_FOLD) all
+
+$(MLX)	: $(MLX_FOLD)$(MLX)
+
+$(MLX_FOLD)$(MLX)	:
+		make -C $(MLX_FOLD)
+
+
 
 $(NAME)	: $(OBJ)
 		$(CC) $(CCFLAGS) $(IFLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
@@ -35,8 +45,11 @@ $(NAME)	: $(OBJ)
 clean	:
 		rm -rf $(OBJ)
 		make -C $(LIB_FOLD) clean
+		make -C $(MLX_FOLD) clean
 
 fclean	: clean
 		rm -rf $(NAME)
+		rm -rf $(LIB_FOLD)$(LIB)
+		rm -rf $(MLX_FOLD)$(MLX)
 
 re		: fclean all
