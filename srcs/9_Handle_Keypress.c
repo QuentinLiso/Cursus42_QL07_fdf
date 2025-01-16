@@ -15,7 +15,6 @@
 int	handle_keypress_input(int keysym, t_scene *scene)
 {
 	scene->to_update = TRUE;
-	handle_color_input(keysym, scene->map);
 	handle_rotation_input(keysym, scene->map);
 	if (keysym == XK_Escape)
 		closing_window(scene);
@@ -46,21 +45,6 @@ int	handle_rotation_input(int keysym, t_map *map)
 		rotate_3d_mesh(map, 10, Y_AXIS);
 	else if (keysym == XK_z)
 		rotate_3d_mesh(map, 10, Z_AXIS);
-	return (1);
-}
-
-int	handle_color_input(int keysym, t_map *map)
-{
-	if (keysym == XK_r)
-		map->color_2 = RED;
-	else if (keysym == XK_b)
-		map->color_2 = BLUE;
-	else if (keysym == XK_j)
-		map->color_2 = YELLOW;
-	else if (keysym == XK_p)
-		map->color_2 = PINK;
-	else if (keysym == XK_w)
-		map->color_2 = WHITE;
 	return (1);
 }
 

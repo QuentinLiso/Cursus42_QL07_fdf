@@ -121,8 +121,6 @@ typedef struct s_map
 	t_vector3			*iso_mesh;
 	t_vector3			*raw_mesh;
 	t_vector3			center;
-	int					color_1;
-	int					color_2;
 	t_bool				iso;
 }	t_map;
 
@@ -182,7 +180,6 @@ void	zoom_out(t_map *map);
 
 int		handle_keypress_input(int keysym, t_scene *scene);
 int		handle_rotation_input(int keysym, t_map *map);
-int		handle_color_input(int keysym, t_map *map);
 void	toggle_view(t_map *map);
 int		closing_window(t_scene *scene);
 

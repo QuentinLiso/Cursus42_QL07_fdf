@@ -66,6 +66,4 @@ void	draw_instructions(t_scene *scene, int color)
 		"Zoom in/out : i / o");
 	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 130, WHITE,
 		"Center : f");
-	mlx_string_put(scene->mlx_disp, scene->mlx_win, 50, 150, WHITE,
-		"Switch colors : rbjpw");
 }
