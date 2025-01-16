@@ -19,6 +19,9 @@ LFLAGS=-L./minilibx-linux -L./libft -lmlx -lXext -lX11 -lft -lm
 
 .PHONY: all clean fclean re
 
+YELLOW=\033[1;33m
+WHITE=\033[0;37m
+
 #-------------------------------------------
 
 all 	: $(LIB) $(MLX) $(NAME) 
@@ -27,16 +30,19 @@ all 	: $(LIB) $(MLX) $(NAME)
 $(LIB)	: $(LIB_FOLD)$(LIB)
 
 $(LIB_FOLD)$(LIB)	:
+		@echo -e "$(YELLOW)\n\n🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒 COMPILING LIBFT 🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒\n\n$(WHITE)"
 		make -C $(LIB_FOLD) all
 
 $(MLX)	: $(MLX_FOLD)$(MLX)
 
 $(MLX_FOLD)$(MLX)	:
+		@echo -e "$(YELLOW)\n\n🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒 COMPILING MLX 🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒\n\n$(WHITE)"
 		make -C $(MLX_FOLD)
 
 
 
 $(NAME)	: $(OBJ)
+		@echo -e "$(YELLOW)\n\n🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒 COMPILING FDF 🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒🦒\n\n$(WHITE)"
 		$(CC) $(CCFLAGS) $(IFLAGS) $(OBJ) -o $(NAME) $(LFLAGS)
 
 %.o		: %.c $(HEADER)
